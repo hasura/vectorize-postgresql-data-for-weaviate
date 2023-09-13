@@ -14,7 +14,7 @@ data.
 
 ### Step 1: Create a `.env` file
 
-Create a `.env` file in the `/node` repository with the following contents:
+Create a `.env` file in the `/node` directory with the following contents:
 
 ```bash
 POSTGRESQL_CONNECTION_STRING=<YOUR_PG_URL>
@@ -32,8 +32,10 @@ OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
 
 ### Step 2: Install dependencies
 
+From the `/node` directory, run:
+
 ```bash
-cd node && npm i
+npm i
 ```
 
 ### Step 3: Run the service
