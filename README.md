@@ -91,5 +91,3 @@ curl localhost:3000/near_text/employees/first_name,last_name/John
 ## Python
 
 Coming soon!
-
-# vectorize-postgresql-data
