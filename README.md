@@ -1,13 +1,20 @@
 # Vectorize PostgreSQL Data
 
 This repository is a set of services to vectorize PostgreSQL data for Weaviate. After configuring your environment
-variables, spinning up either the NodeJS or Python service, you can use the `vectorize` endpoint to vectorize your data.
+variables, spinning up either the NodeJS or Python service, you can use the `/vectorize` endpoint to vectorize your
+data.
+
+## Prerequisites
+
+- [OpenAI API key](https://openai.com/blog/openai-api)
+- [Weaviate instance](https://weaviate.io/)
+- PostgreSQL database
 
 ## NodeJS
 
 ### Step 1: Create a `.env` file
 
-Create a `.env` file in the root of the repository with the following contents:
+Create a `.env` file in the `/node` repository with the following contents:
 
 ```bash
 POSTGRESQL_CONNECTION_STRING=<YOUR_PG_URL>
@@ -84,4 +91,5 @@ curl localhost:3000/near_text/employees/first_name,last_name/John
 ## Python
 
 Coming soon!
+
 # vectorize-postgresql-data
