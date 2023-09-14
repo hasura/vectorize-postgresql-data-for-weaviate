@@ -72,22 +72,23 @@ curl localhost:3000/show_table/<TABLE_NAME>
 ### Step 5: Test your data
 
 ```bash
-curl localhost:3000/near_text/<TABLE_NAME>/<COLUMN_NAME>/<SEARCH_TERM>
+curl localhost:3000/near_text/<TABLE_NAME>?fields="<COMMA_SEPARATED_COLUMN_NAME>"&searchText="<SEARCH_STRING>"
 ```
 
-By passing a table's name, column name, and search term to the `/near_text` endpoint, the service will search for
+By passing a table's name, set of fields, and search string to the `/near_text` endpoint, the service will search for
 similar text in Weaviate.
 
-For example:
+Below, we're searching for similar reviews to the text "I think I love this thing" in the `text` column of a `reviews`
+table:
 
 ```bash
-curl localhost:3000/near_text/employees/first_name/John
+curl 'localhost:3000/near_text/reviews?fields=%22text%22&searchText=%22I%20think%20I%20love%20this%20thing%22'
 ```
 
-You can also search multiple fields by passing a comma-separated list of column names:
+You can also search multiple fields by passing a comma-separated list of column names to the `fields` parameter:
 
 ```bash
-curl localhost:3000/near_text/employees/first_name,last_name/John
+curl 'localhost:3000/near_text/reviews?fields=%22text%2Cuser_id%22&searchText=%22I%20think%20I%20love%20this%20thing%22'
 ```
 
 ## Python
