@@ -84,13 +84,20 @@ app.get('/vectorize/:table', async (req, res) => {
 });
 
 // make a near_text query to Weaviate
-app.get('/near_text/:className/:fields/:text', async (req, res) => {
+app.get('/near_text/:className', async (req, res) => {
   const className = capitalize(req.params.className);
-  const fields = req.params.fields.split(',');
-  const results = await nearText(className, fields, req.params.text);
-  res.json({
-    results,
-  });
+  const fields = req.query.fields;
+  let searchText = req.query.searchText.replace(/['"]+/g, '').trim();
+
+  if (!fields || !searchText) {
+    return res.status(400).json({ error: 'Fields and searchText query parameters are required.' });
+  }
+
+  let fieldArray = fields.split(',').map((field) => field.trim());
+  fieldArray = fields.split(',').map((field) => field.replace(/['"]+/g, '').trim());
+
+  const results = await nearText(className, fieldArray, searchText);
+  res.json({ results });
 });
 
 // delete a class in Weaviate

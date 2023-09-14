@@ -74,7 +74,7 @@ const nearText = async (className, fields, text) => {
     .get()
     .withClassName(className)
     .withFields(fields)
-    .withNearText({ concepts: [`"${text}"`] })
+    .withNearText({ concepts: [`${text}`] })
     .withLimit(2)
     .do();
 
