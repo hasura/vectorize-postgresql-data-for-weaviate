@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import express from 'express';
+import bodyParser from 'body-parser';
 import { vectorize, nearText, deleteClass, capitalize } from './utilities/weaviateHelpers.js';
 import { showColumns } from './utilities/showHelpers.js';
 import { db } from './pg.js';
@@ -7,6 +8,8 @@ import { db } from './pg.js';
 config();
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // show all available tables
 app.get('/show_tables', (req, res) => {
@@ -84,19 +87,18 @@ app.get('/vectorize/:table', async (req, res) => {
 });
 
 // make a near_text query to Weaviate
-app.get('/near_text/:className', async (req, res) => {
-  const className = capitalize(req.params.className);
-  const fields = req.query.fields;
-  let searchText = req.query.searchText.replace(/['"]+/g, '').trim();
-
-  if (!fields || !searchText) {
-    return res.status(400).json({ error: 'Fields and searchText query parameters are required.' });
+app.post('/near_text', async (req, res) => {
+  if (!req.body.columns || !req.body.query || !req.body.table) {
+    return res.status(400).json({ error: 'An object with table, columns, and a query are required.' });
   }
 
-  let fieldArray = fields.split(',').map((field) => field.trim());
-  fieldArray = fields.split(',').map((field) => field.replace(/['"]+/g, '').trim());
+  const columns = req.body.columns;
+  let searchText = req.body.query;
+  const className = capitalize(req.body.table);
 
-  const results = await nearText(className, fieldArray, searchText);
+  let columnsArray = columns.split(',').map((field) => field.trim());
+
+  const results = await nearText(className, columnsArray, searchText);
   res.json({ results });
 });
 

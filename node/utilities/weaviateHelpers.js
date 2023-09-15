@@ -70,16 +70,21 @@ async function vectorize(className, data) {
 // near_text search
 const nearText = async (className, fields, text) => {
   fields = fields.join(' ');
-  const res = await client.graphql
-    .get()
-    .withClassName(className)
-    .withFields(fields)
-    .withNearText({ concepts: [`${text}`] })
-    .withLimit(2)
-    .do();
+  try {
+    const res = await client.graphql
+      .get()
+      .withClassName(className)
+      .withFields(fields)
+      .withNearText({ concepts: [`${text}`] })
+      .withLimit(2)
+      .do();
 
-  console.log(JSON.stringify(res, null, 2));
-  return res;
+    console.log(JSON.stringify(res, null, 2));
+    return res;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
 };
 
 // function to capitalize the first letter of tables
