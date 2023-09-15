@@ -1,4 +1,4 @@
-# Vectorize PostgreSQL Data
+# Vectorize PostgreSQL Data for Weaviate
 
 This repository is a set of services to vectorize PostgreSQL data for Weaviate. After configuring your environment
 variables, spinning up either the NodeJS or Python service, you can use the `/vectorize` endpoint to vectorize your
