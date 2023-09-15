@@ -71,24 +71,34 @@ curl localhost:3000/show_table/<TABLE_NAME>
 
 ### Step 5: Test your data
 
+You can send a `POST` request to the `/near_text` endpoint to query your vectorized data:
+
 ```bash
-curl localhost:3000/near_text/<TABLE_NAME>?fields="<COMMA_SEPARATED_COLUMN_NAME>"&searchText="<SEARCH_STRING>"
+curl -L 'localhost:3000/near_text' -H 'Content-Type: application/json' -d '{
+    "table": "<TABLE_TO_QUERY>",
+    "columns": "<COLUMNS_TO_QUERY>",
+    "query": "<QUERY_STRING>"
+}'
 ```
 
-By passing a table's name, set of fields, and search string to the `/near_text` endpoint, the service will search for
-similar text in Weaviate.
-
-Below, we're searching for similar reviews to the text "I think I love this thing" in the `text` column of a `reviews`
-table:
+An example query that will search the `reviews` table for the `text` column for phrases similar to "I love this thing":
 
 ```bash
-curl 'localhost:3000/near_text/reviews?fields=%22text%22&searchText=%22I%20think%20I%20love%20this%20thing%22'
+curl -L 'localhost:3000/near_text' -H 'Content-Type: application/json' -d '{
+    "table": "reviews",
+    "columns": "text",
+    "query": "I love this thing"
+}'
 ```
 
-You can also search multiple fields by passing a comma-separated list of column names to the `fields` parameter:
+You can also pass in multiple columns to search:
 
 ```bash
-curl 'localhost:3000/near_text/reviews?fields=%22text%2Cuser_id%22&searchText=%22I%20think%20I%20love%20this%20thing%22'
+curl -L 'localhost:3000/near_text' -H 'Content-Type: application/json' -d '{
+    "table": "reviews",
+    "columns": "text, user_id",
+    "query": "I love this thing"
+}'
 ```
 
 ## Python
