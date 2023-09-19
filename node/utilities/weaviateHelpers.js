@@ -30,8 +30,9 @@ async function vectorize(className, data) {
   let newDocuments;
 
   try {
-    // remove the id column from the data as it angers Weaviate
+    // transform the id into <className>_id to avoid conflicts since weaviate reserves the id field
     data.forEach((document) => {
+      document[`${className}_id`] = document.id;
       delete document.id;
     });
 
