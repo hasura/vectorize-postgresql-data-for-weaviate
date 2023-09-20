@@ -3,14 +3,12 @@ def convert_data_types(properties):
     valid_data_type_map = {
         "uuid": "text",
         "string": "text",
-        "text": "text",
         "integer": "int",
         "float": "number",
         "timestamp with time zone": "text",
         "bool": "boolean",
         "datetime": "date",
         "phone_number": "phoneNumber",
-        "url": "url",
     }
 
     converted_properties = []
