@@ -1,0 +1,4 @@
+python-dotenv
+psycopg2
+weaviate-client
+flask
